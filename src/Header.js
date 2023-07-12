@@ -32,14 +32,18 @@ function Header() {
                 <li>정현진님, 안녕하세요!</li>
               </div>
               <div className="text__box">
-                <li>
-                  <img src="./product.svg"></img>상품리스트 페이지
-                </li>
+                <Link to="/products/list">
+                  <li>
+                    <img src="./product.svg"></img>상품리스트 페이지
+                  </li>
+                </Link>
               </div>
               <div className="text__box">
-                <li>
-                  <img src="./bookmark.svg"></img>북마크 페이지
-                </li>
+                <Link to="/bookmark">
+                  <li>
+                    <img src="./bookmark.svg"></img>북마크 페이지
+                  </li>
+                </Link>
               </div>
             </div>
           </ul>

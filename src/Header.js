@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
-import { AiOutlineGift } from "react-icons/ai";
-import { AiOutlineStar } from "react-icons/ai";
 
 function Header() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -23,7 +21,7 @@ function Header() {
         onClick={dropdownHandler}
         src="./dropdown.svg"
       ></img>
-      {isDropdownOpen && (
+      {isDropdownOpen && ( //드롭다운 수정 필요
         <div className="open">
           <ul>
             <li className="triangle">
@@ -34,24 +32,14 @@ function Header() {
                 <li>정현진님, 안녕하세요!</li>
               </div>
               <div className="text__box">
-                <Link to="/products/list">
-                  <li>
-                    <span className="icon__box">
-                      <AiOutlineGift className="icon" />
-                    </span>
-                    상품리스트 페이지
-                  </li>
-                </Link>
+                <li>
+                  <img src="./product.svg"></img>상품리스트 페이지
+                </li>
               </div>
               <div className="text__box">
-                <Link to="/bookmark">
-                  <li>
-                    <span className="icon__box">
-                      <AiOutlineStar className="icon" />
-                    </span>
-                    북마크 페이지
-                  </li>
-                </Link>
+                <li>
+                  <img src="./bookmark.svg"></img>북마크 페이지
+                </li>
               </div>
             </div>
           </ul>

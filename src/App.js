@@ -1,11 +1,19 @@
 import Header from "./Header";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Main from "./pages/Main";
+import ProductList from "./pages/ProductList";
+import BookMark from "./pages/BookMark";
 
 function App() {
   return (
-    <div>
-      <Header />
-      <div>솔로프로젝트 시작</div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/products/list" element={<ProductList />} />
+        <Route path="/bookmark" element={<BookMark />} />
+      </Routes>
+    </Router>
   );
 }
 

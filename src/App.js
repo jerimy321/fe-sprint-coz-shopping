@@ -12,15 +12,15 @@ function App() {
     <Router>
       <div className="container">
         <Header />
-        <div className="content"></div>
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/products/list" element={<ProductList />} />
+            <Route path="/bookmark" element={<BookMark />} />
+          </Routes>
+        </div>
         <Footer />
       </div>
-
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/products/list" element={<ProductList />} />
-        <Route path="/bookmark" element={<BookMark />} />
-      </Routes>
     </Router>
   );
 }

@@ -1,9 +1,10 @@
 import React from "react";
-import Product from "../components/Product";
 import { useState, useEffect } from "react";
-//props 내려주기
+import Product from "../components/Product";
+
 function Main() {
   const [productList, setProductList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetch("http://cozshopping.codestates-seb.link/api/v1/products?count=4")

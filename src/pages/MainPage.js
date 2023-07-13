@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Product from "../components/Product";
 
-function Main() {
+function MainPage() {
   const [productList, setProductList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -36,4 +36,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default MainPage;

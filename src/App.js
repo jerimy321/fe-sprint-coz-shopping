@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import Main from "./pages/Main";
+import MainPage from "./pages/MainPage";
 import ProductList from "./pages/ProductList";
 import BookMark from "./pages/BookMark";
 import Footer from "./components/Footer";
@@ -14,7 +14,7 @@ function App() {
         <Header />
         <div className="content">
           <Routes>
-            <Route path="/" element={<Main />} />
+            <Route path="/" element={<MainPage />} />
             <Route path="/products/list" element={<ProductList />} />
             <Route path="/bookmark" element={<BookMark />} />
           </Routes>

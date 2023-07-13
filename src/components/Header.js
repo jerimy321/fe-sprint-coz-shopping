@@ -13,7 +13,7 @@ function Header() {
     <div className="header__container">
       <Link to="/">
         <div className="logo_wrapper">
-          <img className="logo" src="./logo.png"></img>
+          <img className="logo" src="./logo.png" alt="logo"></img>
           <span className="title">COZ Shopping</span>
         </div>
       </Link>

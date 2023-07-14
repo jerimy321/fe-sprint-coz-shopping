@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./Product.css";
 import Filter from "./Filter";
+import BookMark from "./BookMark";
 
 function Product({ count, showFilter }) {
   const [productList, setProductList] = useState([]);
@@ -37,69 +38,53 @@ function Product({ count, showFilter }) {
         showFilter={showFilter}
       />
       {filteredProductList.map((item) => {
-        if (item.type === "Brand") {
-          return (
-            <div key={item.id} className="product__container">
-              <img
-                src={item.brand_image_url}
-                className="product__img"
-                alt="product"
-              />
-              <span className="product__first_line">
-                <span className="product__title">{item.brand_name}</span>
-                <span className="fw_700">관심고객수</span>
-              </span>
-              <span className="product__follower fw_600 ta_right">
-                {Number(item.follower).toLocaleString("ko-KR")}
-              </span>
-            </div>
-          );
-        } else if (item.type === "Exhibition") {
-          return (
-            <div key={item.id} className="product__container">
-              <img
-                src={item.image_url}
-                className="product__img"
-                alt="product"
-              />
-              <span className="product__title">{item.title}</span>
-              <span className="product__sub fw_400 ta_right">
-                {item.sub_title}
-              </span>
-            </div>
-          );
-        } else if (item.type === "Category") {
-          return (
-            <div key={item.id} className="product__container">
-              <img
-                src={item.image_url}
-                className="product__img"
-                alt="product"
-              />
-              <span className="product__title">#{item.title}</span>
-            </div>
-          );
-        } else if (item.type === "Product") {
-          return (
-            <div key={item.id} className="product__container">
-              <img
-                src={item.image_url}
-                className="product__img"
-                alt="product"
-              />
-              <span className="product__first_line">
-                <span className="product__title">{item.title}</span>
-                <span className="product__discount">
-                  {item.discountPercentage}%
+        return (
+          <div key={item.id} className="product__container">
+            <img
+              src={item.image_url ? item.image_url : item.brand_image_url}
+              className="product__img"
+              alt={item.title ? item.title : item.brand_name}
+            />
+            <BookMark />
+            {item.type === "Brand" && (
+              <>
+                <span className="product__first_line">
+                  <span className="product__title">{item.brand_name}</span>
+                  <span className="fw_700">관심고객수</span>
                 </span>
-              </span>
-              <span className="product__price fw_400 ta_right">
-                {Number(item.price).toLocaleString("ko-KR")}원
-              </span>
-            </div>
-          );
-        }
-        return null;
+                <span className="product__follower fw_600 ta_right">
+                  {Number(item.follower).toLocaleString("ko-KR")}
+                </span>
+              </>
+            )}
+            {item.type === "Exhibition" && (
+              <>
+                <span className="product__title">{item.title}</span>
+                <span className="product__sub fw_400 ta_right">
+                  {item.sub_title}
+                </span>
+              </>
+            )}
+            {item.type === "Category" && (
+              <>
+                <span className="product__title">#{item.title}</span>
+              </>
+            )}
+            {item.type === "Product" && (
+              <>
+                <span className="product__first_line">
+                  <span className="product__title">{item.title}</span>
+                  <span className="product__discount">
+                    {item.discountPercentage}%
+                  </span>
+                </span>
+                <span className="product__price fw_400 ta_right">
+                  {Number(item.price).toLocaleString("ko-KR")}원
+                </span>
+              </>
+            )}
+          </div>
+        );
       })}
     </div>
   );

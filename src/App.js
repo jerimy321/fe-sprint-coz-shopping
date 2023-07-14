@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import MainPage from "./pages/MainPage";
 import ProductList from "./pages/ProductList";
-import BookMark from "./pages/BookMark";
+import BookMarkPage from "./pages/BookMarkPage";
 import Footer from "./components/Footer";
 import "./App.css";
 
@@ -16,7 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/products/list" element={<ProductList />} />
-            <Route path="/bookmark" element={<BookMark />} />
+            <Route path="/bookmark" element={<BookMarkPage />} />
           </Routes>
         </div>
         <Footer />

@@ -1,35 +1,36 @@
-/* .product_main {
+.product_main {
     display: flex;
     flex-direction: column;
 }
 
 
 .list__title {
-    margin: 24px 76px 12px 76px;
+    margin: 24px 76px 24px 76px;
 
     font-size: 24px;
     font-weight: 600;
 }
 
 .productList__container {
-    margin: 0 76px;
+    margin: 0 50px;
 }
 
 .product__container {
     margin-left: 24px;
     width: 264px;
     height: 264px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
 }
 
 .product__box {
 
-    width: 1198px;
+    width: 100%;
     height: 264px;
     display: flex;
     flex-direction: row;
-    align-content: space-evenly;
+    align-content: space-between;
     flex-wrap: wrap;
     flex: 1;
 }
@@ -68,4 +69,4 @@
     width: 264px;
     flex: 1;
 
-} */
+}

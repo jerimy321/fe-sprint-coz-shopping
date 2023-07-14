@@ -8,7 +8,7 @@ function Dropdown() {
     <div className="open">
       <ul>
         <li className="triangle">
-          <img src="./Polygon.svg" alt="triangle"></img>
+          <img src="/images/Polygon.svg" alt="triangle"></img>
         </li>
         <div className="text__container">
           <div className="text__box">

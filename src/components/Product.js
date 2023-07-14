@@ -1,9 +1,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./Product.css";
+import Filter from "./Filter";
 
-function Product({ count }) {
+function Product({ count, showFilter }) {
   const [productList, setProductList] = useState([]);
+  const [filteredType, setFilteredType] = useState(null);
 
   useEffect(() => {
     let url = "http://cozshopping.codestates-seb.link/api/v1/products";
@@ -19,9 +21,22 @@ function Product({ count }) {
       });
   }, [count]);
 
+  const onclickHandler = (type) => {
+    setFilteredType(type);
+  };
+
+  const filteredProductList = filteredType
+    ? productList.filter((item) => item.type === filteredType)
+    : productList;
+
   return (
     <div className="product__box">
-      {productList.map((item) => {
+      <Filter
+        filteredType={filteredType}
+        onTypeClick={onclickHandler}
+        showFilter={showFilter}
+      />
+      {filteredProductList.map((item) => {
         if (item.type === "Brand") {
           return (
             <div key={item.id} className="product__container">

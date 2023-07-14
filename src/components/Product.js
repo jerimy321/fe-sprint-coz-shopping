@@ -18,17 +18,49 @@ function Product() {
   //Category => 카테고리이름(title)
   //Exhibition => 기획전 이름(title), 기획전 설명(sub_title[3])
   const shoppingList = () => {
-    return productList.map((item) => (
-      <div key={item.id} className="list">
-        <img src={item.image_url} alt="product" />
-        <h3>{item.title}</h3>
-        //classname이 product, brand.. 등등으로 구분 되게 하고 ? : 방법으로
-        표시하기
-      </div>
-    ));
+    const renderedList = productList.map((item) => {
+      if (item.type === "Brand") {
+        return (
+          <div key={item.id} className="product__container">
+            <img
+              src={item.brand_image_url}
+              className="product__img"
+              alt="product"
+            />
+            <h3 className="product__title">{item.brand_name}</h3>
+            <h3 className="product__follower">{item.follower}</h3>
+          </div>
+        );
+      } else if (item.type === "Exhibition") {
+        return (
+          <div key={item.id} className="product__container">
+            <img src={item.image_url} className="product__img" alt="product" />
+            <h3 className="product__title">{item.title}</h3>
+            <h3 className="product__sub">{item.sub_title}</h3>
+          </div>
+        );
+      } else if (item.type === "Category") {
+        return (
+          <div key={item.id} className="product__container">
+            <img src={item.image_url} className="product__img" alt="product" />
+            <h3 className="product__title">#{item.title}</h3>
+          </div>
+        );
+      } else if (item.type === "Product") {
+        return (
+          <div key={item.id} className="product__container">
+            <img src={item.image_url} className="product__img" alt="product" />
+            <h3 className="product__title">{item.title}</h3>
+            <h3 className="product__discount">{item.discountPercentage}</h3>
+            <h3 className="product__price">{item.price}</h3>
+          </div>
+        );
+      }
+      return null;
+    });
+    return <div>{renderedList}</div>;
   };
-
-  return;
+  return <div>{shoppingList()}</div>;
 }
 
 export default Product;

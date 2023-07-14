@@ -1,0 +1,29 @@
+.list__title {
+    font-size: 24;
+    font-weight: 600;
+}
+
+.productList__container {
+    width: 1128px;
+    height: 264px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    flex: 1;
+}
+
+.product__container {
+    width: 264px;
+    height: 264px;
+}
+
+.product__img {
+    width: 264px;
+    height: 210px;
+    border-radius: 6%;
+}
+
+.roduct__title {
+    font-size: 16;
+    font-weight: 800;
+}

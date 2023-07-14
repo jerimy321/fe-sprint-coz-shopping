@@ -13,14 +13,14 @@ function Header() {
     <div className="header__container">
       <Link to="/">
         <div className="logo_wrapper">
-          <img className="logo" src="./logo.png" alt="logo"></img>
+          <img className="logo" src="/images/logo.png" alt="logo"></img>
           <span className="title">COZ Shopping</span>
         </div>
       </Link>
       <img
         className={`dropdown ${isDropdownOpen ? "open" : ""}`}
         onClick={dropdownHandler}
-        src="./dropdown.svg"
+        src="/images/dropdown.svg"
       ></img>
       {isDropdownOpen && <Dropdown />}
     </div>

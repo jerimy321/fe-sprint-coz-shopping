@@ -21,6 +21,7 @@ function Header() {
         className={`dropdown ${isDropdownOpen ? "open" : ""}`}
         onClick={dropdownHandler}
         src="/images/dropdown.svg"
+        alt="드롭다운 버튼"
       ></img>
       {isDropdownOpen && <Dropdown />}
     </div>

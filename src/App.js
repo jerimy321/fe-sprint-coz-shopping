@@ -6,22 +6,25 @@ import ProductList from "./pages/ProductList";
 import BookMarkPage from "./pages/BookMarkPage";
 import Footer from "./components/Footer";
 import "./App.css";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
-    <Router>
-      <div className="container">
-        <Header />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<MainPage />} />
-            <Route path="/products/list" element={<ProductList />} />
-            <Route path="/bookmark" element={<BookMarkPage />} />
-          </Routes>
+    <RecoilRoot>
+      <Router>
+        <div className="container">
+          <Header />
+          <div className="content">
+            <Routes>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/products/list" element={<ProductList />} />
+              <Route path="/bookmark" element={<BookMarkPage />} />
+            </Routes>
+          </div>
+          <Footer />
         </div>
-        <Footer />
-      </div>
-    </Router>
+      </Router>
+    </RecoilRoot>
   );
 }
 

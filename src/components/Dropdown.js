@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-// import "./Header.css";
+import React from "react";
 import { Link } from "react-router-dom";
 import { AiOutlineGift, AiOutlineStar } from "react-icons/ai";
 

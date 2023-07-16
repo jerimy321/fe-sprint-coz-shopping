@@ -1,5 +1,4 @@
 import React from "react";
-import Product from "./Product";
 import "./Filter.css";
 
 const Filter = ({ filteredType, onTypeClick, showFilter }) => {

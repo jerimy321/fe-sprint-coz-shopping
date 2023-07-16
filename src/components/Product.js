@@ -2,11 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./Product.css";
 import Filter from "./Filter";
-import BookMark from "./BookMark";
+import { useRecoilState } from "recoil";
+import { bookmarkState } from "../atoms";
+import { PiStarFill } from "react-icons/pi";
 
 function Product({ count, showFilter }) {
   const [productList, setProductList] = useState([]);
   const [filteredType, setFilteredType] = useState(null);
+  const [bookmarks, setBookmarks] = useRecoilState(bookmarkState);
 
   useEffect(() => {
     let url = "http://cozshopping.codestates-seb.link/api/v1/products";
@@ -22,8 +25,29 @@ function Product({ count, showFilter }) {
       });
   }, [count]);
 
+  useEffect(() => {
+    const storedBookmarks = localStorage.getItem("bookmarks");
+    if (storedBookmarks) {
+      setBookmarks(JSON.parse(storedBookmarks));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  }, [bookmarks]);
+
   const onclickHandler = (type) => {
     setFilteredType(type);
+  };
+
+  const handleBookmark = (id) => {
+    setBookmarks((prevBookmarks) => {
+      if (prevBookmarks.includes(id)) {
+        return prevBookmarks.filter((bookmarkId) => bookmarkId !== id);
+      } else {
+        return [...prevBookmarks, id];
+      }
+    });
   };
 
   const filteredProductList = filteredType
@@ -38,14 +62,21 @@ function Product({ count, showFilter }) {
         showFilter={showFilter}
       />
       {filteredProductList.map((item) => {
+        const isBookmarked = bookmarks.includes(item.id);
+
         return (
           <div key={item.id} className="product__container">
-            <img
-              src={item.image_url ? item.image_url : item.brand_image_url}
-              className="product__img"
-              alt={item.title ? item.title : item.brand_name}
-            />
-            <BookMark />
+            <div className="product__img-container">
+              <img
+                src={item.image_url ? item.image_url : item.brand_image_url}
+                className="product__img"
+                alt={item.title ? item.title : item.brand_name}
+              />
+              <PiStarFill
+                className={`bookmark__icon ${isBookmarked ? " on" : ""}`}
+                onClick={() => handleBookmark(item.id)}
+              />
+            </div>
             {item.type === "Brand" && (
               <>
                 <span className="product__first_line">
@@ -60,9 +91,7 @@ function Product({ count, showFilter }) {
             {item.type === "Exhibition" && (
               <>
                 <span className="product__title">{item.title}</span>
-                <span className="product__sub fw_400 ta_right">
-                  {item.sub_title}
-                </span>
+                <span className="product__sub fw_400">{item.sub_title}</span>
               </>
             )}
             {item.type === "Category" && (

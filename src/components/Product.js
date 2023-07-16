@@ -5,6 +5,7 @@ import Filter from "./Filter";
 import { useRecoilState } from "recoil";
 import { bookmarkState } from "../atoms";
 import { PiStarFill } from "react-icons/pi";
+import toast from "react-simple-toasts";
 
 function Product({ count, showFilter }) {
   const [productList, setProductList] = useState([]);
@@ -42,17 +43,25 @@ function Product({ count, showFilter }) {
 
   const handleBookmark = (id) => {
     setBookmarks((prevBookmarks) => {
-      if (prevBookmarks.includes(id)) {
-        return prevBookmarks.filter((bookmarkId) => bookmarkId !== id);
+      const updatedBookmarks = { ...prevBookmarks };
+      if (updatedBookmarks[id]) {
+        delete updatedBookmarks[id];
       } else {
-        return [...prevBookmarks, id];
+        updatedBookmarks[id] = true;
       }
+      return updatedBookmarks;
     });
   };
 
   const filteredProductList = filteredType
     ? productList.filter((item) => item.type === filteredType)
     : productList;
+
+  const bookmarkedProductList = filteredProductList.filter(
+    (item) => bookmarks[item.id]
+  );
+
+  console.log(bookmarkedProductList);
 
   return (
     <div className="product__box">
@@ -62,7 +71,7 @@ function Product({ count, showFilter }) {
         showFilter={showFilter}
       />
       {filteredProductList.map((item) => {
-        const isBookmarked = bookmarks.includes(item.id);
+        const isBookmarked = item.id in bookmarks;
 
         return (
           <div key={item.id} className="product__container">
@@ -70,11 +79,37 @@ function Product({ count, showFilter }) {
               <img
                 src={item.image_url ? item.image_url : item.brand_image_url}
                 className="product__img"
+                // onClick={() => toast("상품이 북마크에 추가되었습니다.")} //상품이 북마크에서 제거되었습니다.
                 alt={item.title ? item.title : item.brand_name}
               />
               <PiStarFill
                 className={`bookmark__icon ${isBookmarked ? " on" : ""}`}
-                onClick={() => handleBookmark(item.id)}
+                onClick={() => {
+                  handleBookmark(item.id);
+                  {
+                    if (!isBookmarked) {
+                      toast(
+                        <>
+                          <PiStarFill className="bookmark__icon.on" /> 상품이
+                          북마크에 추가되었습니다.
+                        </>,
+                        {
+                          className: "toast",
+                        }
+                      );
+                    } else {
+                      toast(
+                        <>
+                          <PiStarFill className="bookmark__icon" /> 상품이
+                          북마크에서 제거되었습니다.
+                        </>,
+                        {
+                          className: "toast",
+                        }
+                      );
+                    }
+                  }
+                }}
               />
             </div>
             {item.type === "Brand" && (

@@ -48,7 +48,8 @@
     right: 0;
     top: 28px;
     margin-right: 76px;
-    position: absolute
+    position: absolute;
+
 }
 
 .dropdown:hover {
@@ -58,7 +59,6 @@
 .triangle {
     margin-left: 130px;
 
-    z-index: 1;
 }
 
 .text__container {
@@ -70,7 +70,7 @@
     align-items: flex-start;
     display: flex;
     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.10);
-    z-index: 0;
+    z-index: 7;
 }
 
 .text__box {

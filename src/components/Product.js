@@ -2,10 +2,15 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./Product.css";
 import Filter from "./Filter";
+import { useRecoilState } from "recoil";
+import { bookmarkState } from "../atoms";
+import { PiStarFill } from "react-icons/pi";
+import toast from "react-simple-toasts";
 
 function Product({ count, showFilter }) {
   const [productList, setProductList] = useState([]);
   const [filteredType, setFilteredType] = useState(null);
+  const [bookmarks, setBookmarks] = useRecoilState(bookmarkState);
 
   useEffect(() => {
     let url = "http://cozshopping.codestates-seb.link/api/v1/products";
@@ -21,13 +26,42 @@ function Product({ count, showFilter }) {
       });
   }, [count]);
 
+  useEffect(() => {
+    const storedBookmarks = localStorage.getItem("bookmarks");
+    if (storedBookmarks) {
+      setBookmarks(JSON.parse(storedBookmarks));
+    }
+  }, [setBookmarks]);
+
+  useEffect(() => {
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  }, [bookmarks]);
+
   const onclickHandler = (type) => {
     setFilteredType(type);
+  };
+
+  const handleBookmark = (id) => {
+    setBookmarks((prevBookmarks) => {
+      const updatedBookmarks = { ...prevBookmarks };
+      if (updatedBookmarks[id]) {
+        delete updatedBookmarks[id];
+      } else {
+        updatedBookmarks[id] = true;
+      }
+      return updatedBookmarks;
+    });
   };
 
   const filteredProductList = filteredType
     ? productList.filter((item) => item.type === filteredType)
     : productList;
+
+  const bookmarkedProductList = filteredProductList.filter(
+    (item) => bookmarks[item.id]
+  );
+
+  console.log(bookmarkedProductList);
 
   return (
     <div className="product__box">
@@ -37,69 +71,83 @@ function Product({ count, showFilter }) {
         showFilter={showFilter}
       />
       {filteredProductList.map((item) => {
-        if (item.type === "Brand") {
-          return (
-            <div key={item.id} className="product__container">
+        const isBookmarked = item.id in bookmarks;
+
+        return (
+          <div key={item.id} className="product__container">
+            <div className="product__img-container">
               <img
-                src={item.brand_image_url}
+                src={item.image_url ? item.image_url : item.brand_image_url}
                 className="product__img"
-                alt="product"
+                alt={item.title ? item.title : item.brand_name}
               />
-              <span className="product__first_line">
-                <span className="product__title">{item.brand_name}</span>
-                <span className="fw_700">관심고객수</span>
-              </span>
-              <span className="product__follower fw_600 ta_right">
-                {Number(item.follower).toLocaleString("ko-KR")}
-              </span>
+              <PiStarFill
+                className={`bookmark__icon ${isBookmarked ? " on" : ""}`}
+                onClick={() => {
+                  handleBookmark(item.id);
+                  {
+                    if (!isBookmarked) {
+                      toast(
+                        <>
+                          <PiStarFill className="bookmark__icon on" /> 상품이
+                          북마크에 추가되었습니다.
+                        </>,
+                        {
+                          className: "toast",
+                        }
+                      );
+                    } else {
+                      toast(
+                        <>
+                          <PiStarFill className="bookmark__icon" /> 상품이
+                          북마크에서 제거되었습니다.
+                        </>,
+                        {
+                          className: "toast",
+                        }
+                      );
+                    }
+                  }
+                }}
+              />
             </div>
-          );
-        } else if (item.type === "Exhibition") {
-          return (
-            <div key={item.id} className="product__container">
-              <img
-                src={item.image_url}
-                className="product__img"
-                alt="product"
-              />
-              <span className="product__title">{item.title}</span>
-              <span className="product__sub fw_400 ta_right">
-                {item.sub_title}
-              </span>
-            </div>
-          );
-        } else if (item.type === "Category") {
-          return (
-            <div key={item.id} className="product__container">
-              <img
-                src={item.image_url}
-                className="product__img"
-                alt="product"
-              />
-              <span className="product__title">#{item.title}</span>
-            </div>
-          );
-        } else if (item.type === "Product") {
-          return (
-            <div key={item.id} className="product__container">
-              <img
-                src={item.image_url}
-                className="product__img"
-                alt="product"
-              />
-              <span className="product__first_line">
-                <span className="product__title">{item.title}</span>
-                <span className="product__discount">
-                  {item.discountPercentage}%
+            {item.type === "Brand" && (
+              <>
+                <span className="product__first_line">
+                  <span className="product__title">{item.brand_name}</span>
+                  <span className="fw_700">관심고객수</span>
                 </span>
-              </span>
-              <span className="product__price fw_400 ta_right">
-                {Number(item.price).toLocaleString("ko-KR")}원
-              </span>
-            </div>
-          );
-        }
-        return null;
+                <span className="product__follower fw_600 ta_right">
+                  {Number(item.follower).toLocaleString("ko-KR")}
+                </span>
+              </>
+            )}
+            {item.type === "Exhibition" && (
+              <>
+                <span className="product__title">{item.title}</span>
+                <span className="product__sub fw_400">{item.sub_title}</span>
+              </>
+            )}
+            {item.type === "Category" && (
+              <>
+                <span className="product__title">#{item.title}</span>
+              </>
+            )}
+            {item.type === "Product" && (
+              <>
+                <span className="product__first_line">
+                  <span className="product__title">{item.title}</span>
+                  <span className="product__discount">
+                    {item.discountPercentage}%
+                  </span>
+                </span>
+                <span className="product__price fw_400 ta_right">
+                  {Number(item.price).toLocaleString("ko-KR")}원
+                </span>
+              </>
+            )}
+          </div>
+        );
       })}
     </div>
   );

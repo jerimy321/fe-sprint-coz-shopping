@@ -31,7 +31,7 @@ function Product({ count, showFilter }) {
     if (storedBookmarks) {
       setBookmarks(JSON.parse(storedBookmarks));
     }
-  }, []);
+  }, [setBookmarks]);
 
   useEffect(() => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
@@ -79,7 +79,6 @@ function Product({ count, showFilter }) {
               <img
                 src={item.image_url ? item.image_url : item.brand_image_url}
                 className="product__img"
-                // onClick={() => toast("상품이 북마크에 추가되었습니다.")} //상품이 북마크에서 제거되었습니다.
                 alt={item.title ? item.title : item.brand_name}
               />
               <PiStarFill
@@ -90,7 +89,7 @@ function Product({ count, showFilter }) {
                     if (!isBookmarked) {
                       toast(
                         <>
-                          <PiStarFill className="bookmark__icon.on" /> 상품이
+                          <PiStarFill className="bookmark__icon on" /> 상품이
                           북마크에 추가되었습니다.
                         </>,
                         {
